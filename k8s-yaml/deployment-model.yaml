@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: traffic-sign-model-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: traffic-sign-model
+  template:
+    metadata:
+      labels:
+        app: traffic-sign-model
+    spec:
+      containers:
+      - name: traffic-sign-model
+        image: nginx:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: html-volume
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: html-volume
+        configMap:
+          name: traffic-sign-html

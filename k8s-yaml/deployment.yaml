@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: traffic-sign-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: traffic-sign-app
+  template:
+    metadata:
+      labels:
+        app: traffic-sign-app
+    spec:
+      containers:
+      - name: traffic-sign-app
+        image: traffic-sign-app:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+        - name: app-volume
+          mountPath: /app/app.py
+          subPath: app.py
+      volumes:
+      - name: app-volume
+        configMap:
+          name: app-config

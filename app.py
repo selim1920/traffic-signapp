@@ -1,4 +1,3 @@
-import os
 from flask import Flask, request, jsonify
 import tensorflow as tf
 from PIL import Image
@@ -66,6 +65,13 @@ def prepare_image(image):
     image = np.array(image)
     image = np.expand_dims(image, axis=0)  # Ajouter une dimension pour le batch
     return image
+
+@app.route('/', methods=['GET'])
+def home():
+    """
+    Endpoint de bienvenue pour l'API.
+    """
+    return jsonify({'message': 'Welcome to our Traffic Sign Recognition API!'})
 
 @app.route('/predict', methods=['POST'])
 def predict():
